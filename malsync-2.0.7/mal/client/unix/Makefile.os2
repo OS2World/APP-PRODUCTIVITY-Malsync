@@ -1,0 +1,105 @@
+# Makefile.os2
+
+include Makefile.os2.config
+
+MY_MAKEFLAGS =	-f Makefile.os2
+
+DOCS =		$(TOP)/Doc/README_malsync $(TOP)/Doc/README_AvantGo \
+		$(TOP)/mal/MPL-1_0.txt $(TOP)/README
+
+CLEAN_FILES =	Package/ malsync.exe core $(OBJS)
+
+SRCS =		malsync.c  MAL31ServerConfig.c MAL31DBConfig.c MAL31UserConfig.c \
+		$(TOP)/mal/common/AGNet.c \
+		$(TOP)/mal/common/AGBase64.c \
+		$(TOP)/mal/common/AGProxy.c \
+		$(TOP)/mal/common/AGArray.c \
+		$(TOP)/mal/common/AGDBConfig.c \
+		$(TOP)/mal/common/AGProtectedMem.c \
+		$(TOP)/mal/common/AGLocationConfig.c \
+		$(TOP)/mal/common/AGBufferedNet.c \
+		$(TOP)/mal/common/AGUtilUnix.c \
+		$(TOP)/mal/common/AGDeviceInfo.c \
+		$(TOP)/mal/common/AGProtocol.c \
+		$(TOP)/mal/common/AGPalmProtocol.c \
+		$(TOP)/mal/common/AGWriter.c \
+		$(TOP)/mal/common/AGBufferReader.c \
+		$(TOP)/mal/common/AGHashTable.c \
+		$(TOP)/mal/common/AGReader.c \
+		$(TOP)/mal/common/AGBufferWriter.c \
+		$(TOP)/mal/common/AGMsg.c \
+		$(TOP)/mal/common/AGRecord.c \
+		$(TOP)/mal/common/AGCollection.c \
+		$(TOP)/mal/common/AGDigest.c \
+		$(TOP)/mal/common/AGMD5.c \
+		$(TOP)/mal/common/md5.c \
+		$(TOP)/mal/common/AGSynchronize.c \
+		$(TOP)/mal/common/AGUserConfig.c \
+		$(TOP)/mal/client/common/AGClientProcessor.c \
+		$(TOP)/mal/client/common/AGCommandProcessor.c \
+		$(TOP)/mal/client/common/AGSyncProcessor.c \
+		$(TOP)/mal/common/AGServerConfig.c
+
+OBJS =		$(SRCS:.c=.o)
+
+# Rules
+
+.SUFFIXES:	.c .o
+
+.c.o:		
+		$(CC) $(CFLAGS) -o $@ -c $<
+
+# Targets
+
+all:		malsync.exe
+
+malsync.exe:	$(OBJS)
+		$(LD) $(LDFLAGS) -o $@ $(OBJS) $(LIBS)
+
+check:		all
+
+install-files:	all
+		@if test ! -e $(BINDIR); then \
+			echo "Creating directory $(BINDIR) ..."; \
+			mkdir -p $(BINDIR); \
+		fi; \
+		echo "malsync.exe -> $(BINDIR)/malsync.exe"; \
+		cp malsync.exe $(BINDIR)/malsync.exe; \
+		if test ! -e $(DATADIR); then \
+			echo "Creating directory $(DATADIR) ..."; \
+			mkdir -p $(DATADIR); \
+		fi; \
+		for DOCS_FILE in $(DOCS); do \
+			echo "`basename $$DOCS_FILE` -> $(DATADIR)/`basename $$DOCS_FILE`"; \
+			cp $$DOCS_FILE $(DATADIR)/`basename $$DOCS_FILE`; \
+		done;
+
+clean:		
+		rm -rf $(CLEAN_FILES)
+
+# Automates package creation
+
+package:	
+		@$(MAKE) $(MY_MAKEFLAGS) PREFIX=`pwd`/Package/usr install-files
+
+binary-zip:	package
+		@cd Package; \
+		$(ZIP) $(ZIPFLAGS) -r ../$(ARCHIVE_BIN_ZIP) *; \
+		cd ..
+
+binary-ux2:	package
+		@cd Package; \
+		$(ZIP) $(ZIPFLAGS) -r ../$(ARCHIVE_UX2_ZIP) *; \
+		cd ..; \
+		$(ZIP) $(ZIPFLAGS) $(ARCHIVE_UX2_ZIP) PKGINFO; \
+
+source-zip:	
+		@MY_DIR=`pwd`; \
+		cd $(TOP); \
+		MALSYNC_DIR=`basename \`pwd\``; \
+		cd ..; \
+		$(ZIP) $(ZIPFLAGS) -r $(ARCHIVE_SRC_ZIP) $$MALSYNC_DIR/; \
+		cd $$MY_DIR;
+
+# Dependencies
+

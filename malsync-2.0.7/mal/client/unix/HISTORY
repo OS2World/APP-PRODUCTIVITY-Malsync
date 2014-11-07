@@ -1,0 +1,66 @@
+7/26/99 - Tom 
+ 
+Added verbose option, will print out a lot of debug stuff. 
+Added daemon option, if used the program will fork off and run in a 
+loop until sent a SIGHUP signal.
+
+3/19/00 - Tom
+
+Version 2.0
+
+Updated to run with newer versions of MAL. Added logic to 
+migrate MAL 3.1 user config to newer version.
+
+4/19/00  - Tom
+
+Version 2.0.1 
+
+Added Win32 Microsoft Dev Studio Project
+Fixed solaris compile issue.
+Fixed bug where proxy port was not being converted to
+ a number.
+
+4/30/00 - Tom
+
+Version 2.0.2
+
+Fixed bug where the getopt loop had mysteriously disappeared. 
+Added hooks to get security libs loaded.
+
+5/11/00 - Tom
+
+Version 2.0.3
+
+Fixed a bug where we weren't computing the device OS version
+correctly. 
+Added check to allow color to go down to color palms.
+Added lowres option to force sending down 1 bit images.
+Added a lot of debugging, removed quite option and added
+debug option.
+
+5/14/00 - Tom
+
+Added check to get info from the MBlnDeviceInfo database. This
+will send up the proper bit depth.
+
+11/24/00 - Tom
+
+Version 2.0.4
+
+Changed name of MBlnDeviceInfo to AvGoDeviceInfo, AvantGo changed the
+name and screen depth was not we not getting reported correctly 
+
+1/05/01 - Tom
+
+Version 2.0.6
+
+Applied patch from http://slug.arlut.utexas.edu/~jbaughmn/pilotmgr/patches/malsync-2.0.5/hp-ux.patches
+
+2/08/02 - Tom
+
+Version 2.0.7
+
+Added Darwin support. Changed Makefile to pilotlink.0.9.5
+
+
+

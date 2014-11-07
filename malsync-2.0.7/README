@@ -1,0 +1,18 @@
+
+Malsync is a command line utility to sync AvantGo.com. Here is what you 
+need to do to compile. 
+
+1. Get a copy of pilot-link version 0.9.3 
+(http://www.tomw.org/malsync/pilot-link.0.9.3.tgz)
+2. You need libpisock.a. 
+   - cd to the directory you extracted pilot-link to.
+   - run "configure"
+   - "cd libsock"
+   - "make libpisock.a"
+2. uncompress and untar the malsync distribution. 
+3. cd malsync/mal/client/unix
+4. edit the Makefile in the mal/client/unix directory. Change 
+"PILOT_LINK_DIR" to the appropriate directory where pilot-link is located.
+5. Type "make" and it should all work. 
+
+Checkout the stuff in malsync/Docs about syncing and running.

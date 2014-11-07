@@ -1,0 +1,20 @@
+PKGNAME	malsync
+VERSION	2.0.7
+DATE	20040203
+DESC	malsync
+DESC
+DESC	MalSync is a command line tool that allows Palm Pilots
+DESC	to synchronize to the AvantGo.com server.
+DESC	http://www.tomw.org/malsync/
+CONTACT	e404@gmx.net
+DIR	usr bin bin 444
+DIR	usr/bin bin bin 444
+DIR	usr/share bin bin 444
+DIR	usr/share/doc bin bin 444
+DIR	usr/share/doc/malsync bin bin 444
+FILE	usr/bin/malsync.exe bin bin 755
+FILE	usr/share/doc/malsync/MPL-1_0.txt
+FILE	usr/share/doc/malsync/README
+FILE	usr/share/doc/malsync/README_AvantGo
+FILE	usr/share/doc/malsync/README_malsync
+
